@@ -120,7 +120,7 @@ def translate_term(term):
         }
 
     # Corresponds to a set of query conditions that are ANDed together.
-    elif term['type'] == 'leaf':
+    elif term['type'] == 'concept':
         # Wrap in a branch node.
         preds = []
 
