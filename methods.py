@@ -112,15 +112,17 @@ def translate_expr(expr):
 
 
 def translate_term(term):
+    ttype = term.get('type')
+
     # Corresponds to a branch.
-    if term['type'] == 'branch':
+    if ttype == 'branch':
         return {
             'type': term['operator'],
             'children': map(translate_term, term['terms']),
         }
 
     # Corresponds to a set of query conditions that are ANDed together.
-    elif term['type'] == 'concept':
+    elif ttype == 'concept':
         # Wrap in a branch node.
         preds = []
 
@@ -138,6 +140,8 @@ def translate_term(term):
             'type': 'and',
             'children': preds,
         }
+
+    raise ValueError('Unknown term type `{0}`'.format(ttype))
 
 
 def translate_op(op, val):
