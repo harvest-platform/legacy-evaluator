@@ -26,12 +26,12 @@ def catalog():
     concepts = []
 
     for c in concepts_query:
-        params = {}
+        params = []
 
         for cf in c.concept_fields.select_related('field'):
             f = cf.field
 
-            ops = {}
+            ops = []
             for k, _ in f.operators:
                 o = operators.get(k)
 
@@ -39,22 +39,20 @@ def catalog():
                     continue
 
                 k = op_map_out.get(k, k)
-                ops[k] = {
+                ops.append({
                     'id': o.lookup,
                     'doc': '{} ({})'.format(o.verbose_name, o.short_name),
                     'multiple': hasattr(o, 'join_string'),
-                }
+                })
 
-            key = '{}.{}.{}'.format(*f.natural_key())
-
-            params[key] = {
-                'id': f.id,
+            params.append({
+                'id': '{}.{}.{}'.format(*f.natural_key()),
                 'label': str(cf),
                 'type': f.simple_type,
                 'doc': f.description,
                 'nullable': f.nullable,
                 'operators': ops,
-            }
+            })
 
         local = space_re.sub('_', punc_re.sub('', c.name.lower()))
 
