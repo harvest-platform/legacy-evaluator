@@ -13,5 +13,5 @@ pip install -r requirements.txt
 ## Run
 
 ```
-DJANGO_SETTINGS_MODULE=path.to.settings python service.py
+DJANGO_SETTINGS_MODULE=path.to.settings python main.py
 ```
