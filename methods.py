@@ -68,7 +68,7 @@ def catalog():
 
     return {
         'version': '1.0.0',
-        'concept': concepts,
+        'concepts': concepts,
     }
 
 
