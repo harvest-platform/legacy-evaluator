@@ -132,12 +132,12 @@ def translate_term(term):
         # Wrap in a branch node.
         preds = []
 
-        for p in term['params'].values():
-            op, val = translate_op(p['operator'], p['value'])
+        for param in term['params']:
+            op, val = translate_op(param['operator'], param['value'])
 
             preds.append({
-                'concept': term['id'],
-                'field': p['id'],
+                'concept': term['concept'],
+                'field': param['id'],
                 'operator': op,
                 'value': val,
             })
