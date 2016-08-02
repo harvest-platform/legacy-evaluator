@@ -36,6 +36,13 @@ def validate():
 @app.route('/plan', methods=['POST'])
 def plan():
     expr = request.get_json()
+    error = methods.validate(expr)
+
+    if error:
+        return json.dumps({
+            'error': error,
+        }), 422
+
     plan = methods.plan(expr)
 
     resp = Response(json.dumps(plan))
@@ -47,6 +54,13 @@ def plan():
 @app.route('/idents', methods=['POST'])
 def idents():
     expr = request.get_json()
+    error = methods.validate(expr)
+
+    if error:
+        return json.dumps({
+            'error': error,
+        }), 422
+
     idents = methods.idents(expr)
 
     resp = Response(json.dumps(idents))
@@ -58,6 +72,13 @@ def idents():
 @app.route('/count', methods=['POST'])
 def count():
     expr = request.get_json()
+    error = methods.validate(expr)
+
+    if error:
+        return json.dumps({
+            'error': error,
+        }), 422
+
     count = methods.count(expr)
 
     resp = Response(json.dumps({'count': count}))

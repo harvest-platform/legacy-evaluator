@@ -68,15 +68,12 @@ def catalog():
 
 
 def validate(expr):
-    error = None
     context = translate_expr(expr)
 
     try:
         parsers.datacontext.parse(context)
     except Exception as e:
-        error = str(e)
-
-    return error
+        return str(e)
 
 
 def plan(expr):
