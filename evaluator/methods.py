@@ -68,42 +68,34 @@ def catalog():
 
 
 def validate(expr):
-    context = translate_expr(expr)
-
     try:
-        parsers.datacontext.parse(context)
+        cxt = translate_expr(expr)
+        return parsers.datacontext.parse(cxt), None
     except Exception as e:
-        return str(e)
+        return None, e
 
 
-def plan(expr):
-    context = translate_expr(expr)
-    node = parsers.datacontext.parse(context)
-
+def plan(expr, node):
+    cxt = translate_expr(expr)
     queryset = node.apply().values_list('pk', flat=True).order_by()
     compiler = queryset.query.get_compiler(queryset.db)
     sql, params = compiler.as_sql()
 
     return {
-        'harvest': context,
+        'context': cxt,
         'sql': sql,
         'params': params,
     }
 
 
-def idents(expr):
-    context = translate_expr(expr)
-    node = parsers.datacontext.parse(context)
-
+def idents(expr, node):
     queryset = node.apply().values_list('pk', flat=True).order_by()
     compiler = queryset.query.get_compiler(queryset.db)
 
     return tuple(r[0] for r in compiler.results_iter())
 
 
-def count(expr):
-    context = translate_expr(expr)
-    node = parsers.datacontext.parse(context)
+def count(expr, node):
     return node.apply().count()
 
 
