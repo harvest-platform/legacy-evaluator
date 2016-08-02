@@ -41,28 +41,23 @@ def catalog():
                 k = op_map_out.get(k, k)
                 ops.append({
                     'id': o.lookup,
-                    'doc': '{} ({})'.format(o.verbose_name, o.short_name),
+                    'doc': o.verbose_name,
                     'multiple': hasattr(o, 'join_string'),
                 })
 
             params.append({
-                'id': '{}.{}.{}'.format(*f.natural_key()),
+                'id': f.pk,
                 'label': str(cf),
                 'type': f.simple_type,
                 'doc': f.description,
-                'nullable': f.nullable,
                 'operators': ops,
             })
 
-        local = space_re.sub('_', punc_re.sub('', c.name.lower()))
-
         concepts.append({
             'id': c.pk,
-            'uri': 'audgendb.{}'.format(local),
             'label': str(c),
             'doc': c.description,
             'keywords': c.keywords,
-            'type': None,
             'params': params,
         })
 
