@@ -1,5 +1,5 @@
 docopt
-python-msgpack
+msgpack-python
 Flask
 avocado>=2.4,<2.5
 Django>=1.6,<1.7
